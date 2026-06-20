@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modern Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' }
+  </script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function(){ emailjs.init({ publicKey: "YOUR_PUBLIC_KEY" }); })();
+  </script>
+  <script src="https://unpkg.com/scrollreveal"></script>
+
+  <style>
+    body { overflow-x: hidden; }
+    .glow { box-shadow: 0 0 25px rgba(34, 211, 238, 0.4); }
+    .nav-link.active { color: #22d3ee; }
+
+    .heading-hidden {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .heading-visible {
+      opacity: 1 !important;
+      transform: translateY(0px) !important;
+    }
+    /* ======== Projects SECTION ANIMATIONS ======== */
+@keyframes flipIn {
+  0%   { opacity: 0; transform: perspective(400px) rotateX(-90deg); }
+  60%  { transform: perspective(400px) rotateX(10deg); }
+  100% { opacity: 1; transform: perspective(400px) rotateX(0deg); }
+}
+@keyframes bounceIn {
+  0%   { opacity: 0; transform: scale(0.3); }
+  50%  { transform: scale(1.05); }
+  70%  { transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes glowFlash {
+  0%, 100% { text-shadow: 0 0 10px rgba(34,211,238,0); }
+  50%       { text-shadow: 0 0 30px rgba(34,211,238,0.8), 0 0 60px rgba(168,85,247,0.4); }
+}
+
+.projects-title { opacity: 0; }
+.projects-title.animate {
+  animation: flipIn 0.9s ease forwards, glowFlash 2s ease 1s infinite;
+}
+.projects-sub { opacity: 0; }
+.projects-sub.animate {
+  animation: bounceIn 0.8s cubic-bezier(0.36, 0.07, 0.19, 0.97) 0.5s forwards;
+}
+    /* ======== ABOUT SECTION ANIMATIONS ======== */
+
+    @keyframes fadeInLeft {
+      from { opacity: 0; transform: translateX(-50px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeInRight {
+      from { opacity: 0; transform: translateX(50px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes floatImg {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-14px); }
+    }
+    @keyframes glowPulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(34,211,238,0.25), 0 25px 60px rgba(34,211,238,0.15); }
+      50%       { box-shadow: 0 0 45px rgba(34,211,238,0.55), 0 25px 60px rgba(34,211,238,0.25); }
+    }
+    @keyframes shimmerText {
+      0%   { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    @keyframes typewriter {
+      from { width: 0; }
+      to   { width: 100%; }
+    }
+    @keyframes blinkCursor {
+      0%, 100% { border-color: #22d3ee; }
+      50%       { border-color: transparent; }
+    }
+    @keyframes btnPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(34,211,238,0.45); }
+      70%       { box-shadow: 0 0 0 12px rgba(34,211,238,0); }
+    }
+    @keyframes badgeBounce {
+      0%, 100% { transform: scale(1) rotate(-1deg); }
+      50%       { transform: scale(1.06) rotate(1deg); }
+    }
+    @keyframes dotPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
+    @keyframes slideInBadge {
+      from { opacity: 0; transform: translateY(12px) scale(0.8); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .about-img-side      { animation: fadeInLeft 0.9s ease both; }
+    .about-img-float     { animation: floatImg 4.5s ease-in-out infinite; }
+    .about-img-glow      { animation: glowPulse 3s ease-in-out infinite; }
+
+    .about-badge-card    { animation: fadeInUp 1s ease 0.5s both, badgeBounce 3.5s ease-in-out 2s infinite; }
+    .online-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: #22d3ee;
+      border-radius: 50%;
+      margin-right: 6px;
+      vertical-align: middle;
+      animation: dotPulse 2s ease-in-out infinite;
+    }
+
+    .about-content-side  { animation: fadeInRight 0.9s ease 0.2s both; }
+
+    .about-title {
+      background: linear-gradient(90deg, #000 0%, #22d3ee 50%, #000 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmerText 3.5s linear infinite;
+    }
+    .dark .about-title {
+      background: linear-gradient(90deg, #fff 0%, #22d3ee 50%, #fff 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .about-subtitle {
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2.5px solid #22d3ee;
+      width: 0;
+      animation:
+        typewriter 2.2s steps(40) 0.9s forwards,
+        blinkCursor 0.75s step-end 0.9s 5;
+    }
+
+    .about-para-1      { animation: fadeInUp 0.7s ease 1.1s both; }
+    .about-para-2      { animation: fadeInUp 0.7s ease 1.25s both; }
+    .about-tech-label  { animation: fadeInUp 0.7s ease 1.35s both; }
+
+    .about-tech-badge {
+      transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    }
+    .about-tech-badge:hover {
+      transform: translateY(-4px) scale(1.1);
+      box-shadow: 0 6px 20px rgba(34,211,238,0.35);
+    }
+    .about-tech-badge:nth-child(1) { animation: slideInBadge 0.4s ease 1.4s both; }
+    .about-tech-badge:nth-child(2) { animation: slideInBadge 0.4s ease 1.5s both; }
+    .about-tech-badge:nth-child(3) { animation: slideInBadge 0.4s ease 1.6s both; }
+    .about-tech-badge:nth-child(4) { animation: slideInBadge 0.4s ease 1.7s both; }
+    .about-tech-badge:nth-child(5) { animation: slideInBadge 0.4s ease 1.8s both; }
+
+    .about-cta {
+      animation: fadeInUp 0.7s ease 1.5s both, btnPulse 2.5s ease 2.5s infinite;
+      transition: transform 0.2s ease, background 0.2s ease !important;
+    }
+    .about-cta:hover { transform: scale(1.06) !important; }
+  </style>
+</head>
+
+
+<body class="bg-white text-black dark:bg-gradient-to-b dark:from-black dark:via-zinc-950 dark:to-black dark:text-white transition-all duration-300">
+
+  <div id="progress-bar" class="fixed top-0 left-0 h-1 bg-cyan-400 z-[999] w-0 duration-200"></div>
+
+  <!-- NAVBAR -->
+  <nav class="fixed top-0 left-0 w-full bg-white/80 text-black dark:bg-black/70 dark:text-white backdrop-blur-md z-50 border-b border-zinc-800">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <h1 class="text-2xl font-bold text-cyan-400">PORTFOLIO</h1>
+      <ul class="hidden md:flex items-center gap-8 text-lg font-medium">
+        <li><a href="#home" class="nav-link active hover:text-cyan-400 duration-300">Home</a></li>
+        <li><a href="#about" class="nav-link hover:text-cyan-400 duration-300">About</a></li>
+        <li><a href="#projects" class="nav-link hover:text-cyan-400 duration-300">Projects</a></li>
+        <li><a href="#skills" class="nav-link hover:text-cyan-400 duration-300">Skills</a></li>
+        <li><a href="#contact" class="nav-link hover:text-cyan-400 duration-300">Contact</a></li>
+      </ul>
+      <button onclick="toggleDark()" class="ml-4 px-4 py-2 rounded-xl border border-zinc-600 text-sm hover:bg-zinc-800 transition">🌙 / ☀️</button>
+      <div class="text-3xl cursor-pointer" id="menu-btn" onmouseenter="document.getElementById('mobile-menu').classList.remove('hidden')">
+        <i class="ri-menu-line"></i>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden bg-white dark:bg-zinc-900 text-black dark:text-white px-6 py-6 space-y-5 text-lg border-t border-zinc-200 dark:border-zinc-700" onmouseleave="document.getElementById('mobile-menu').classList.add('hidden')">
+      <a href="#home" class="block py-3 hover:text-cyan-400">Home</a>
+      <a href="#about" class="block py-3 hover:text-cyan-400">About</a>
+      <a href="#projects" class="block py-3 hover:text-cyan-400">Projects</a>
+      <a href="#skills" class="block py-3 hover:text-cyan-400">Skills</a>
+      <a href="#contact" class="block py-3 hover:text-cyan-400">Contact</a>
+      <div class="pt-4 border-t border-zinc-200 dark:border-zinc-700">
+        <button onclick="toggleDark()" class="w-full flex items-center justify-center gap-3 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 py-4 rounded-2xl text-lg font-medium transition">
+          <span id="mobile-theme-icon">🌙</span>
+          <span>Switch Theme</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section id="home" class="min-h-screen flex items-center relative overflow-hidden bg-white text-black dark:bg-[#0a0a0a] dark:text-white transition-all duration-300 pt-24 md:pt-32">
+    <div class="absolute w-[600px] h-[600px] bg-cyan-500/10 blur-[150px] rounded-full top-[-150px] left-[-150px]"></div>
+    <div class="absolute w-[500px] h-[500px] bg-purple-500/10 blur-[150px] rounded-full bottom-[-120px] right-[-120px]"></div>
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center w-full relative z-10">
+      <div class="text-left">
+        <p class="text-cyan-400 text-xl mb-2">Hello, I'm</p>
+        <h1 class="text-6xl md:text-7xl font-bold text-gray-900 dark:text-white mb-3 leading-tight">Sheikh Fahmida Zaman</h1>
+        <h2 id="typing" class="text-3xl md:text-5xl text-gray-700 dark:text-gray-300 font-semibold mb-6 h-[70px]"></h2>
+        <p class="max-w-lg text-gray-700 dark:text-gray-300 text-lg leading-relaxed mb-10">
+          Passionate about building intelligent systems with
+          <span class="text-cyan-400">Machine Learning</span>,
+          <span class="text-purple-400">Deep Learning</span>, and
+          <span class="text-cyan-400">Web Technologies</span>.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="#contact" class="bg-cyan-400 hover:bg-cyan-300 text-black px-8 py-4 rounded-2xl font-semibold transition-all duration-300 text-lg">Contact Me</a>
+          <a href="#projects" class="border border-gray-400 dark:border-white/30 hover:border-cyan-400 hover:bg-white/10 text-black dark:text-white px-8 py-4 rounded-2xl font-medium transition-all duration-300 text-lg">View My Projects</a>
+        </div>
+        <div class="flex gap-6 mt-12">
+          <a href="https://github.com/fahmidajothy123-bitw" class="text-gray-500 dark:text-gray-400 hover:text-cyan-400 transition-colors text-3xl"><i class="ri-github-fill"></i></a>
+          <a href="https://linkedin.com/in/fahmida" target="_blank" class="text-gray-500 dark:text-gray-400 hover:text-cyan-400 transition-colors text-3xl"><i class="ri-linkedin-box-fill"></i></a>
+          <a href="https://www.facebook.com/share/1bD38JFSWH/" class="text-gray-500 dark:text-gray-400 hover:text-cyan-400 transition-colors text-3xl"><i class="ri-facebook-circle-fill"></i></a>
+        </div>
+      </div>
+      <div class="flex justify-center md:justify-end">
+        <div id="profile-card" class="relative w-80 h-80 md:w-[420px] md:h-[420px] transition-transform duration-200">
+          <div class="w-full h-full rounded-full border-4 border-cyan-400/80 p-3 bg-gray-100 dark:bg-gray-900 shadow-2xl shadow-cyan-500/40 overflow-hidden">
+            <img src="me.jpeg" class="w-full h-full object-cover rounded-full">
+          </div>
+          <div class="absolute -inset-6 rounded-full border border-cyan-400/20 -z-10"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ <!-- ABOUT SECTION -->
+<section id="about" class="px-4 py-10 bg-white text-black dark:bg-zinc-950 dark:text-white overflow-hidden">
+  <div class="max-w-6xl mx-auto flex flex-col md:grid md:grid-cols-2 gap-10 md:gap-16 items-center w-full">
+
+    <!-- Left Side Image -->
+    <div class="flex justify-center w-full">
+      <div class="relative about-img-float">
+        <img
+          src="me.jpeg"
+          alt="Fahmida Zaman"
+          class="about-img-glow rounded-3xl w-[260px] h-[320px] sm:w-[320px] sm:h-[400px] md:w-[380px] md:h-[480px] object-cover border-4 border-cyan-400">
+        <div class="about-badge-card absolute -bottom-4 -right-4 md:-bottom-6 md:-right-6 bg-zinc-900 border border-cyan-400 rounded-2xl px-4 py-3 md:px-6 md:py-4 text-center">
+          <p class="text-cyan-400 font-semibold text-xs md:text-sm">
+            <span class="online-dot"></span>Open to Collaboration
+          </p>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- Right Side Content -->
+    <div class="space-y-6 about-content-side w-full mt-8 md:mt-0">
+
+      <div>
+        <h2 class="about-title text-4xl md:text-5xl font-bold mb-4">About Me</h2>
+        <h3 class="about-subtitle text-xl sm:text-2xl md:text-3xl text-cyan-400 font-semibold">ML &amp; AI Researcher + Web Developer</h3>
+      </div>
+
+      <p class="about-para-1 text-black dark:text-gray-300 leading-relaxed text-base md:text-lg">
+        I am a passionate <span class="text-cyan-500 dark:text-cyan-400">Machine Learning and AI Researcher</span> with a strong foundation in building intelligent systems.
+        Alongside my research work, I love creating beautiful and responsive websites using modern web technologies.
+      </p>
+
+      <p class="about-para-2 text-black dark:text-gray-400 leading-relaxed text-base md:text-lg">
+        Previously, I have developed multiple modern and fully responsive web projects using
+        <span class="text-cyan-500 dark:text-cyan-400 font-medium">HTML, CSS, Tailwind CSS, and JavaScript</span>.
+        This combination of AI expertise and frontend development skills allows me to build both intelligent backends and elegant user interfaces.
+      </p>
+
+      <!-- Tech Mention -->
+      <div class="pt-2">
+        <p class="about-tech-label text-black dark:text-gray-400 mb-3 text-sm md:text-base">Technologies I work with:</p>
+        <div class="flex flex-wrap gap-2 md:gap-3">
+          <span class="about-tech-badge bg-zinc-200 dark:bg-zinc-800 text-cyan-600 dark:text-cyan-300 text-xs md:text-sm px-3 py-2 md:px-4 rounded-full cursor-default">Python</span>
+          <span class="about-tech-badge bg-zinc-200 dark:bg-zinc-800 text-cyan-600 dark:text-cyan-300 text-xs md:text-sm px-3 py-2 md:px-4 rounded-full cursor-default">PyTorch</span>
+          <span class="about-tech-badge bg-zinc-200 dark:bg-zinc-800 text-cyan-600 dark:text-cyan-300 text-xs md:text-sm px-3 py-2 md:px-4 rounded-full cursor-default">Tailwind CSS</span>
+          <span class="about-tech-badge bg-zinc-200 dark:bg-zinc-800 text-cyan-600 dark:text-cyan-300 text-xs md:text-sm px-3 py-2 md:px-4 rounded-full cursor-default">HTML / CSS</span>
+          <span class="about-tech-badge bg-zinc-200 dark:bg-zinc-800 text-cyan-600 dark:text-cyan-300 text-xs md:text-sm px-3 py-2 md:px-4 rounded-full cursor-default">JavaScript</span>
+        </div>
+      </div>
+
+      <a href="#contact" class="about-cta inline-block mt-4 bg-cyan-500 text-black px-7 py-3 md:px-9 md:py-4 rounded-2xl font-semibold hover:bg-cyan-400 transition-all duration-300 text-base md:text-lg">
+        Get In Touch
+      </a>
+
+    </div>
+  </div>
+</section>
+
+  <!-- PROJECTS SECTION -->
+<section id="projects" class="bg-white dark:bg-black text-black dark:text-white pt-6 pb-4 px-6 overflow-hidden">
+  <div class="max-w-7xl mx-auto">
+    <div class="mb-12 text-center">
+      <h2 class="text-5xl md:text-6xl font-bold projects-title">Featured Projects</h2>
+      <p class="text-gray-500 dark:text-gray-400 mt-6 text-lg projects-sub">Selected works & development projects</p>
+    </div>
+      <!-- Project 1 -->
+      <div class="grid md:grid-cols-2 gap-16 items-start py-16 border-b border-zinc-200 dark:border-zinc-800 last:border-b-0">
+        <div class="md:sticky md:top-32 self-start">
+          <p class="text-cyan-400 text-lg mb-4 font-semibold">01</p>
+          <h3 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">Flower Store Website</h3>
+          <p class="text-gray-600 dark:text-gray-400 leading-8 text-lg mb-8">A fully responsive flower e-commerce platform built to deliver a smooth online shopping experience, featuring a dynamic product gallery, real-time shopping cart, and secure checkout system. The design focuses on elegant UI, intuitive navigation, and a seamless customer journey from browsing to purchase.</p>
+          <div class="flex flex-wrap gap-3 mb-10">
+            <span class="px-4 py-2 rounded-full bg-zinc-200 dark:bg-zinc-800">HTML</span>
+            <span class="px-4 py-2 rounded-full bg-zinc-200 dark:bg-zinc-800">CSS</span>
+            <span class="px-4 py-2 rounded-full bg-zinc-200 dark:bg-zinc-800">JavaScript</span>
+            <span class="px-4 py-2 rounded-full bg-zinc-200 dark:bg-zinc-800">PHP</span>
+          </div>
+          <a href="https://github.com/fahmidajothy123-bit/flower-store-website" target="_blank" class="inline-block bg-cyan-400 hover:bg-cyan-300 text-black px-8 py-4 rounded-2xl font-semibold transition-all duration-300 hover:scale-105 shadow-[0_0_30px_rgba(34,211,238,0.3)]">View Project</a>
+        </div>
+        <div>
+          <div class="rounded-[40px] overflow-hidden border border-zinc-800 shadow-2xl hover:scale-[1.02] duration-800 bg-zinc-900">
+            <img src="flower.jpg" class="w-full h-full object-cover">
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="grid md:grid-cols-2 gap-16 items-start py-16 border-b border-zinc-200 dark:border-zinc-800 last:border-b-0">
+        <div class="md:sticky md:top-32 self-start">
+          <p class="text-purple-400 text-lg mb-4 font-semibold">02</p>
+          <h3 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">Hostel Management System</h3>
+          <p class="text-gray-600 dark:text-gray-400 leading-8 text-lg mb-8">A full-featured hostel management platform built to simplify daily administrative operations, including student registration, room allocation, and fee management. The system also provides a powerful admin dashboard for monitoring occupancy, tracking payments, and managing student records efficiently in one centralized place.</p>
+          <div class="flex flex-wrap gap-3 mb-10">
+            <span class="px-4 py-2 rounded-full bg-zinc-200 dark:bg-zinc-800">HTML</span>
+            <span class="px-4 py-2 rounded-full bg-zinc-200 dark:bg-zinc-800">CSS</span>
+            <span class="px-4 py-2 rounded-full bg-zinc-200 dark:bg-zinc-800">JavaScript</span>
+            <span class="px-4 py-2 rounded-full bg-zinc-200 dark:bg-zinc-800">PHP</span>
+            <span class="px-4 py-2 rounded-full bg-zinc-200 dark:bg-zinc-800">MySQL</span>
+          </div>
+          <a href="https://github.com/fahmidajothy123-bit/Hostel-Mangement" target="_blank" class="inline-block bg-cyan-400 hover:bg-cyan-300 text-black px-8 py-4 rounded-2xl font-semibold transition-all duration-300 hover:scale-105 shadow-[0_0_30px_rgba(34,211,238,0.3)]">View Project</a>
+        </div>
+        <div>
+          <div class="rounded-[40px] overflow-hidden border border-zinc-800 shadow-2xl hover:scale-[1.02] duration-700 bg-zinc-900">
+            <img src="hostel.jpg" class="w-full h-full object-cover">
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="grid md:grid-cols-2 gap-16 items-start py-16 border-b border-zinc-200 dark:border-zinc-800 last:border-b-0">
+        <div class="md:sticky md:top-32 self-start">
+          <p class="text-cyan-400 text-lg mb-4 font-semibold">03</p>
+          <h3 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">Course Material Management System</h3>
+          <p class="text-gray-600 dark:text-gray-400 leading-8 text-lg mb-8">A comprehensive online platform designed to streamline course material management, assignment submission, and resource sharing between students and faculty. The system includes secure user authentication, organized academic workflows, and an intuitive interface for seamless content distribution, tracking, and collaboration.</p>
+          <div class="flex flex-wrap gap-3 mb-10">
+            <span class="px-4 py-2 rounded-full bg-zinc-200 dark:bg-zinc-800">HTML</span>
+            <span class="px-4 py-2 rounded-full bg-zinc-200 dark:bg-zinc-800">CSS</span>
+            <span class="px-4 py-2 rounded-full bg-zinc-200 dark:bg-zinc-800">JavaScript</span>
+            <span class="px-4 py-2 rounded-full bg-zinc-200 dark:bg-zinc-800">PHP</span>
+            <span class="px-4 py-2 rounded-full bg-zinc-200 dark:bg-zinc-800">MySQL</span>
+          </div>
+          <a href="https://github.com/fahmidajothy123-bit/Course-Material-Management-System" target="_blank" class="inline-block bg-cyan-400 hover:bg-cyan-300 text-black px-8 py-4 rounded-2xl font-semibold transition-all duration-300 hover:scale-105 shadow-[0_0_30px_rgba(34,211,238,0.3)]">View Project</a>
+        </div>
+        <div>
+          <div class="rounded-[40px] overflow-hidden border border-zinc-800 shadow-2xl hover:scale-[1.02] duration-500 bg-zinc-900">
+            <img src="course.jpg" class="w-full h-full object-cover">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH SECTION -->
+  <section id="research" class="bg-white dark:bg-zinc-950 text-black dark:text-white pt-4 pb-16 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-5xl md:text-6xl font-bold">Research Work</h2>
+        <p class="text-gray-500 dark:text-gray-400 mt-6 text-lg">Research interests, publications & ongoing works</p>
+      </div>
+      <div class="bg-zinc-100 dark:bg-zinc-900/70 border border-zinc-300 dark:border-zinc-800 rounded-[40px] p-10 md:p-14 shadow-2xl hover:border-cyan-400 transition-all duration-500">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10">
+          <div>
+            <p class="text-cyan-500 dark:text-cyan-400 font-semibold mb-3">Research Project • 2026</p>
+            <h3 class="text-3xl md:text-4xl font-bold leading-tight">Fake News Detection using RoBERTa and Enhanced Graph Convolutional Networks</h3>
+          </div>
+          <div class="bg-cyan-400/10 border border-cyan-400 text-cyan-500 dark:text-cyan-300 px-6 py-3 rounded-2xl h-fit">Ongoing Research</div>
+        </div>
+        <p class="text-gray-700 dark:text-gray-400 leading-8 text-lg mb-10">
+          This research focuses on improving fake news detection accuracy using transformer-based language models and graph neural networks.
+          The proposed hybrid framework combines contextual embeddings from RoBERTa with Enhanced Graph Convolutional Networks (EGCN) for capturing semantic and relational information efficiently.
+        </p>
+        <div class="flex flex-wrap gap-4 mb-10">
+          <span class="px-5 py-2 rounded-full bg-zinc-200 dark:bg-zinc-800">NLP</span>
+          <span class="px-5 py-2 rounded-full bg-zinc-200 dark:bg-zinc-800">RoBERTa</span>
+          <span class="px-5 py-2 rounded-full bg-zinc-200 dark:bg-zinc-800">Graph Neural Network</span>
+          <span class="px-5 py-2 rounded-full bg-zinc-200 dark:bg-zinc-800">Deep Learning</span>
+          <span class="px-5 py-2 rounded-full bg-zinc-200 dark:bg-zinc-800">Fake News Detection</span>
+        </div>
+        <a href="https://github.com/fahmidajothy123-bit/Fake-Review-Detection" target="_blank"
+           class="inline-flex items-center gap-3 bg-cyan-400 hover:bg-cyan-300 text-black font-semibold px-8 py-4 rounded-2xl transition-all duration-300 hover:scale-105 shadow-[0_0_30px_rgba(34,211,238,0.35)]">
+          <i class="ri-github-fill text-2xl"></i>
+          View Research
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS SECTION -->
+  <section id="skills" class="px-6 py-16 bg-white text-black dark:bg-zinc-950 dark:text-white">
+    <h2 class="text-5xl font-bold text-center mb-20">Skills</h2>
+    <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-10">
+      <div class="bg-zinc-100 dark:bg-zinc-900 p-10 rounded-3xl border border-zinc-300 dark:border-zinc-800 transition-all duration-300 hover:-translate-y-3 hover:scale-[1.03] hover:border-cyan-400 hover:shadow-2xl hover:shadow-cyan-500/20">
+        <i class="ri-brain-line text-5xl text-cyan-500 dark:text-cyan-400"></i>
+        <h3 class="text-2xl font-bold mt-6 mb-4 text-black dark:text-white">Machine Learning</h3>
+        <p class="text-black dark:text-gray-400 leading-7">Scikit-learn, Pandas, NumPy, TensorFlow, PyTorch</p>
+      </div>
+      <div class="bg-zinc-100 dark:bg-zinc-900 p-10 rounded-3xl border border-zinc-300 dark:border-zinc-800 transition-all duration-300 hover:-translate-y-3 hover:scale-[1.03] hover:border-cyan-400 hover:shadow-2xl hover:shadow-cyan-500/20">
+        <i class="ri-code-s-slash-line text-5xl text-cyan-500 dark:text-cyan-400"></i>
+        <h3 class="text-2xl font-bold mt-6 mb-4 text-black dark:text-white">Frontend</h3>
+        <p class="text-black dark:text-gray-400 leading-7">HTML, Tailwind CSS, JavaScript, Responsive Design</p>
+      </div>
+      <div class="bg-zinc-100 dark:bg-zinc-900 p-10 rounded-3xl border border-zinc-300 dark:border-zinc-800 transition-all duration-300 hover:-translate-y-3 hover:scale-[1.03] hover:border-cyan-400 hover:shadow-2xl hover:shadow-cyan-500/20">
+        <i class="ri-database-2-line text-5xl text-cyan-500 dark:text-cyan-400"></i>
+        <h3 class="text-2xl font-bold mt-6 mb-4 text-black dark:text-white">Data Mining</h3>
+        <p class="text-black dark:text-gray-400 leading-7">Apriori, FP-Growth, Data Visualization, Association Rule Mining</p>
+      </div>
+    </div>
+    <div class="flex flex-wrap justify-center gap-6 mt-16">
+      <a href="https://www.kaggle.com/sheikhfahmidazamaan" target="_blank" class="border border-cyan-400 text-cyan-500 dark:text-cyan-400 px-6 py-3 rounded-xl hover:bg-cyan-400 hover:text-black duration-300 flex items-center gap-2"><i class="ri-bar-chart-box-line"></i> Kaggle</a>
+      <a href="https://codeforces.com/profile/your-username" target="_blank" class="border border-cyan-400 text-cyan-500 dark:text-cyan-400 px-6 py-3 rounded-xl hover:bg-cyan-400 hover:text-black duration-300 flex items-center gap-2"><i class="ri-code-box-line"></i> Codeforces</a>
+      <a href="https://atcoder.jp/users/c221205" target="_blank" class="border border-cyan-400 text-cyan-500 dark:text-cyan-400 px-6 py-3 rounded-xl hover:bg-cyan-400 hover:text-black duration-300 flex items-center gap-2"><i class="ri-terminal-box-line"></i> AtCoder</a>
+    </div>
+  </section>
+
+<!-- CONTACT SECTION -->
+<section id="contact" class="flex items-center justify-center px-6 py-16 bg-white text-black dark:bg-black dark:text-white relative overflow-hidden">
+  <div class="absolute w-[400px] h-[400px] bg-cyan-500/10 blur-[120px] rounded-full top-0 left-0"></div>
+  <div class="absolute w-[400px] h-[400px] bg-purple-500/10 blur-[120px] rounded-full bottom-0 right-0"></div>
+
+  <div class="relative z-10 max-w-5xl w-full">
+
+    <div class="text-center mb-14">
+      <h2 class="text-5xl md:text-6xl font-bold mb-6">Let's Work Together 🚀</h2>
+      <p class="text-gray-400 text-lg leading-8 max-w-2xl mx-auto">Open for collaborations, research projects, internships, and AI-based development opportunities.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <a href="mailto:fahmidajothy123@gmail.com"
+        class="group relative overflow-hidden rounded-3xl p-8 border border-cyan-400/20 bg-zinc-100 dark:bg-zinc-900 hover:border-cyan-400 transition-all duration-500 hover:-translate-y-2">
+        <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="relative z-10">
+          <div class="w-14 h-14 rounded-2xl bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center mb-6 group-hover:bg-cyan-400 group-hover:border-cyan-400 transition-all duration-300">
+            <i class="ri-mail-line text-2xl text-cyan-400 group-hover:text-black transition-colors duration-300"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2 text-black dark:text-white group-hover:text-cyan-400 transition-colors duration-300">Email</h3>
+          <p class="text-zinc-600 dark:text-zinc-400 text-sm group-hover:text-zinc-200 transition-colors duration-300">fahmidajothy123@gmail.com</p>
+        </div>
+        <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-cyan-400 to-purple-500 group-hover:w-full transition-all duration-500"></div>
+      </a>
+
+      <a href="https://github.com/fahmidajothy123-bit" target="_blank"
+        class="group relative overflow-hidden rounded-3xl p-8 border border-cyan-400/20 bg-zinc-100 dark:bg-zinc-900 hover:border-cyan-400 transition-all duration-500 hover:-translate-y-2">
+        <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="relative z-10">
+          <div class="w-14 h-14 rounded-2xl bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center mb-6 group-hover:bg-cyan-400 group-hover:border-cyan-400 transition-all duration-300">
+            <i class="ri-github-line text-2xl text-cyan-400 group-hover:text-black transition-colors duration-300"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2 text-black dark:text-white group-hover:text-cyan-400 transition-colors duration-300">GitHub</h3>
+          <p class="text-zinc-600 dark:text-zinc-400 text-sm group-hover:text-zinc-200 transition-colors duration-300">fahmidajothy123-bit</p>
+        </div>
+        <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-cyan-400 to-purple-500 group-hover:w-full transition-all duration-500"></div>
+      </a>
+
+      <a href="https://linkedin.com/in/fahmida" target="_blank"
+        class="group relative overflow-hidden rounded-3xl p-8 border border-cyan-400/20 bg-zinc-100 dark:bg-zinc-900 hover:border-cyan-400 transition-all duration-500 hover:-translate-y-2">
+        <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="relative z-10">
+          <div class="w-14 h-14 rounded-2xl bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center mb-6 group-hover:bg-cyan-400 group-hover:border-cyan-400 transition-all duration-300">
+            <i class="ri-linkedin-box-line text-2xl text-cyan-400 group-hover:text-black transition-colors duration-300"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2 text-black dark:text-white group-hover:text-cyan-400 transition-colors duration-300">LinkedIn</h3>
+          <p class="text-zinc-600 dark:text-zinc-400 text-sm group-hover:text-zinc-200 transition-colors duration-300">linkedin.com/in/fahmida</p>
+        </div>
+        <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-cyan-400 to-purple-500 group-hover:w-full transition-all duration-500"></div>
+      </a>
+
+    </div>
+
+    <div class="flex justify-center gap-6 mt-12 text-2xl">
+      <a href="https://github.com/fahmidajothy123-bit" target="_blank"
+        class="w-12 h-12 rounded-full border border-zinc-400 dark:border-zinc-700 flex items-center justify-center hover:bg-cyan-400 hover:text-black hover:border-cyan-400 text-black dark:text-white duration-300">
+        <i class="ri-github-fill"></i>
+      </a>
+      <a href="https://linkedin.com/in/fahmida" target="_blank"
+        class="w-12 h-12 rounded-full border border-zinc-400 dark:border-zinc-700 flex items-center justify-center hover:bg-cyan-400 hover:text-black hover:border-cyan-400 text-black dark:text-white duration-300">
+        <i class="ri-linkedin-fill"></i>
+      </a>
+      <a href="mailto:fahmidajothy123@gmail.com"
+        class="w-12 h-12 rounded-full border border-zinc-400 dark:border-zinc-700 flex items-center justify-center hover:bg-cyan-400 hover:text-black hover:border-cyan-400 text-black dark:text-white duration-300">
+        <i class="ri-mail-fill"></i>
+      </a>
+    </div>
+
+    <div class="flex flex-wrap items-center justify-center gap-4 mt-10">
+      <button onclick="openModal()"
+        class="inline-block bg-cyan-400 text-black px-10 py-5 rounded-2xl font-semibold hover:scale-105 duration-300 shadow-[0_0_30px_rgba(34,211,238,0.5)]">
+        Send Message
+      </button>
+      <a href="cv.pdf" download
+        class="inline-flex items-center gap-2 border border-zinc-400 dark:border-zinc-700 text-black dark:text-white px-10 py-5 rounded-2xl font-semibold hover:border-cyan-400 hover:text-cyan-500 dark:hover:text-cyan-400 hover:scale-105 transition-all duration-300">
+        <i class="ri-download-2-line text-xl"></i>
+        Download CV
+      </a>
+    </div>
+
+  </div>
+</section>
+  <!-- CONTACT MODAL -->
+  <div id="contactModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+    <div class="bg-zinc-900 text-white w-full max-w-lg p-8 rounded-2xl border border-zinc-700 relative">
+      <button onclick="closeModal()" class="absolute top-4 right-4 text-white text-xl">✖</button>
+      <h2 class="text-2xl font-bold mb-6 text-center text-cyan-400">Send Message</h2>
+      <form onsubmit="sendMessage(event)" class="space-y-4">
+        <input id="name" type="text" placeholder="Your Name" class="w-full p-3 rounded-lg bg-black border border-zinc-700 text-white">
+        <input id="email" type="email" placeholder="Your Email" class="w-full p-3 rounded-lg bg-black border border-zinc-700 text-white">
+        <textarea id="message" rows="4" placeholder="Your Message" class="w-full p-3 rounded-lg bg-black border border-zinc-700 text-white"></textarea>
+        <button type="submit" class="w-full bg-cyan-400 text-black py-3 rounded-lg font-semibold hover:bg-cyan-300">Send</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-zinc-800 py-8 text-center text-gray-500">
+    © 2026 Sheikh Fahmida Zaman. All Rights Reserved.
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    const menuBtn = document.getElementById("menu-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
+    menuBtn.addEventListener("click", () => { mobileMenu.classList.toggle("hidden"); });
+
+    window.addEventListener("scroll", () => {
+      const totalHeight = document.body.scrollHeight - window.innerHeight;
+      const progress = (window.pageYOffset / totalHeight) * 100;
+      document.getElementById("progress-bar").style.width = progress + "%";
+    });
+
+    const texts = ["ML & AI Researcher", "Web Developer", "Problem Solver"];
+    let count = 0, index = 0;
+    const typingElement = document.getElementById("typing");
+    function type() {
+      const currentText = texts[count];
+      typingElement.textContent = currentText.slice(0, ++index);
+      if (index === currentText.length) {
+        setTimeout(() => { index = 0; count = (count + 1) % texts.length; type(); }, 2000);
+      } else {
+        setTimeout(type, 80);
+      }
+    }
+
+    const profileCard = document.getElementById("profile-card");
+    document.addEventListener("mousemove", (e) => {
+      const x = (window.innerWidth / 2 - e.clientX) / 25;
+      const y = (window.innerHeight / 2 - e.clientY) / 25;
+      profileCard.style.transform = `perspective(1000px) rotateX(${y}deg) rotateY(${-x}deg)`;
+    });
+
+    window.addEventListener("load", () => { type(); });
+
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll(".nav-link");
+    window.addEventListener("scroll", () => {
+      let current = "";
+      sections.forEach(section => {
+        if (pageYOffset >= section.offsetTop - 300) current = section.getAttribute("id");
+      });
+      navLinks.forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === `#${current}`) link.classList.add("active");
+      });
+    });
+const projTitle = document.querySelector('.projects-title');
+const projSub = document.querySelector('.projects-sub');
+const projObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      projTitle.classList.add('animate');
+      projSub.classList.add('animate');
+    }
+  });
+}, { threshold: 0.3 });
+if (projTitle) projObserver.observe(projTitle);
+    ScrollReveal().reveal('section', { distance: '60px', duration: 1500, easing: 'ease', origin: 'bottom', reset: false, interval: 200 });
+
+    function openModal() { document.getElementById("contactModal").classList.remove("hidden"); }
+    function closeModal() { document.getElementById("contactModal").classList.add("hidden"); }
+
+    function sendMessage(e) {
+      e.preventDefault();
+      let name = document.getElementById("name").value.trim();
+      let email = document.getElementById("email").value.trim();
+      let message = document.getElementById("message").value.trim();
+      if (!name || !email || !message) { alert("Please fill all fields"); return; }
+      const btn = e.target.querySelector("button[type='submit']");
+      btn.textContent = "Sending..."; btn.disabled = true;
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ access_key: "99535fe3-95f1-4160-80f5-f8bfbc1ac199", name, email, message })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert("Message sent successfully! 🚀");
+          document.getElementById("name").value = "";
+          document.getElementById("email").value = "";
+          document.getElementById("message").value = "";
+          closeModal();
+        } else { alert("Failed! Please email: fahmidajothy123@gmail.com"); }
+      })
+      .catch(() => { alert("Failed! Please email: fahmidajothy123@gmail.com"); })
+      .finally(() => { btn.textContent = "Send"; btn.disabled = false; });
+    }
+
+    function toggleDark() {
+      document.documentElement.classList.toggle("dark");
+      localStorage.setItem("theme", document.documentElement.classList.contains("dark") ? "dark" : "light");
+    }
+    window.addEventListener("load", () => {
+      if (localStorage.getItem("theme") === "dark") document.documentElement.classList.add("dark");
+    });
+  </script>
+
+</body>
+</html>
